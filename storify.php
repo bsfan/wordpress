@@ -940,12 +940,11 @@ class WP_Storify {
 	}
 	
 	/**
-	 * makes the plugin translation friendly	
+	 * Makes the plugin translation friendly	
 	 * @since 1.0.1
 	 */
 	function i18n() {
-		load_plugin_textdomain( 'storify', null, dirname( plugin_basename( __FILE__ ) ) .'/languages/' );	
-		
+		load_plugin_textdomain( 'storify', null, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 		
 }
