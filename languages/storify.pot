@@ -4,13 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Storify 1.0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/storify\n"
-"POT-Creation-Date: 2012-01-05 18:59:29+00:00\n"
+"POT-Creation-Date: 2012-01-05 19:50:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: dialog.php:16
+msgid "You are not allowed to be here"
+msgstr ""
 
 #: storify.php:458
 msgid "Insert Story"
@@ -46,6 +50,10 @@ msgid ""
 "for free</a>."
 msgstr ""
 
+#: storify.php:547
+msgid "An error occurred while publishing the story"
+msgstr ""
+
 #. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
@@ -64,10 +72,6 @@ msgstr ""
 
 #: storify.php:934
 msgid "Storify &mdash; Insert Story"
-msgstr ""
-
-#: dialog.php:16
-msgid "You are not allowed to be here"
 msgstr ""
 
 #. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
