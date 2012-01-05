@@ -2,7 +2,7 @@
 /*
 Plugin Name: Storify
 Plugin URI: http://www.storify.com
-Description: Brings the power of Storify, the popular social media embedding tool to your WordPress site
+Description: Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 Version: 1.0.1
 Author: Storify
 Author URI: http://storify.com

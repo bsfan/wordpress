@@ -5,7 +5,7 @@ Requires at least: 3.2
 Tested up to: 3.4
 Stable tag: 1.0
 
-Brings the power of Storify, the popular social media embedding tool to your WordPress site
+Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 
 == Description ==
 
@@ -68,7 +68,7 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 = 1.0.1 =
 * Better support for internationalization
-* Fix for E_WARNING level error on story posts when WP_DEBUG was enabled and non-javascript alternative link to story not appearing
+* Fix for E_WARNING level error on story posts when WP_DEBUG was enabled resulting in non-javascript alternative link to story not appearing
 
 = 1.0 =
 * Initial Release
