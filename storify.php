@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Storify
-Plugin URI: http://www.storify.com
+Plugin URI: http://storify.com
 Description: Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 Version: 1.0.1
 Author: Storify
@@ -497,7 +497,7 @@ class WP_Storify {
 				<label for="login" class="screen-reader-text"><?php _e( 'Storify Login:', 'storify' ); ?></label>
 				<input type="text" name="login" />
 				<input type="submit" class="button-primary" value="Save" />
-				<p>Don't have a login? <a href="http://storify.com" target="_blank">Sign up for free</a>.</p>
+				<p><?php _e( 'Don\'t have a login? <a href="http://storify.com" target="_blank">Sign up for free</a>.', 'storify' ); ?></p>
 			</form>
 			<?php do_action( 'post_storify_login' ); ?>
 		</div>	
