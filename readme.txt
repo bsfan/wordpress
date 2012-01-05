@@ -26,9 +26,17 @@ Simply search for the plugin via the plugins -> add new dialog and click install
 
 == Frequently Asked Questions ==
 
+= How do I add a Storify Story to a post? =
+
+There are three ways: 
+
+1. To create and publish a new story, simply click the Storify menu icon on the left side of your WordPress dashboard 
+2. To add an existing story from your account, while editing or creating a post, click the Storify icon in the rich editor toolbar (the same toolbar where you select bold, italic, etc.), and select the story from your account you'd like to insert 
+3. You can always add any existing story to a post, simply by including the story's full link on it's own line, e.g., http://storify.com/username/story-title
+
 = Do I need a Storify account to use this plugin? =
 
-You'll need a Storify account to use all of the plugin's features. If you don't already have an account you can [sign up now](http://storify.com) using your Facebook or Twitter account, otherwise, you will be prompted to create an account prior to publishing your first story.*
+You'll need a Storify account to use all of the plugin's features. If you don't already have an account you can [sign up now](http://storify.com) using your Facebook or Twitter account, otherwise, you will be prompted to create an account prior to publishing your first story.
 
 = I am a developer, can I customize the functionality of the plugin? =
 
@@ -41,6 +49,20 @@ Yes. There are several public methods available to help developers quickly and e
 = Are requests to the Storify API cached at all? =
 
 Yes. All requests to the Storify API (for user and story metadata) are cached using the standard WordPress transients API. By default, this will cache the requests to the database for up to an hour, but can be customized and extended through many popular caching plugins such as W3 Total Cache. There is also an API hook to modify the default TTL (`storify_ttl`);
+
+= Is the Storify plugin available in my language? =
+
+Yes and no. The Storify plugin is ready to be translated, but has not been translated yet. If you would like to translate the Storify plugin into your language, see the [Translating WordPress Page](http://codex.wordpress.org/Translating_WordPress).
+
+== Screenshots ==
+
+1. Create, edit, and publish stories directly from your WordPress dashboard
+2. Storify menu icon in Admin sidebar
+3. Easy access to "Add New Storify" button via WordPress 3.3 Admin Bar
+4. Quickly add your existing stories to a post with the Storify browser integrating into the rich editor
+5. Quickly add your existing stories to a post with the Storify browser integrating into the rich editor
+6. Link to edit existing stories in the WordPress 3.3 Admin Bar
+7. Link to edit existing stories on the edit post screen
 
 == Changelog ==
 
