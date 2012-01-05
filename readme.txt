@@ -66,5 +66,9 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 == Changelog ==
 
+= 1.0.1 =
+* Better support for internationalization
+* Fix for E_WARNING level error on story posts when WP_DEBUG was enabled and non-javascript alternative link to story not appearing
+
 = 1.0 =
 * Initial Release

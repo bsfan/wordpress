@@ -3,7 +3,7 @@
 Plugin Name: Storify
 Plugin URI: http://www.storify.com
 Description: Brings the power of Storify, the popular social media embedding tool to your WordPress site
-Version: 1.0
+Version: 1.0.1
 Author: Storify
 Author URI: http://storify.com
 License: GPL2
@@ -68,6 +68,9 @@ class WP_Storify {
 	function __construct() {
 	
 		self::$instance = &$this;
+		
+		//i18n
+		add_action( 'init', array( &$this, 'i18n' ) );
 					
 		//call hook to add admin menu to admin sidebar
 		add_action( 'admin_menu', array( &$this, 'add_menu' ) );
@@ -345,7 +348,7 @@ class WP_Storify {
 			return false;
 
 		$link = '<noscript>';
-		$link .= sprintf( $story->noscript_link, $story->user, $story->slug, $story->title );
+		$link .= sprintf( $this->noscript_link, $story->user, $story->slug, $story->title );
 		$link .= '<noscript>';
 		
 		$link = apply_filters( 'storify_noscript_link', $link, $permalink, $story );
@@ -934,6 +937,15 @@ class WP_Storify {
 		$data['iframe'] = ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST );
 			
 		wp_localize_script( 'storify', 'storify', $data );
+	}
+	
+	/**
+	 * makes the plugin translation friendly	
+	 * @since 1.0.1
+	 */
+	function i18n() {
+		load_plugin_textdomain( 'storify', null, dirname( plugin_basename( __FILE__ ) ) .'/languages/' );	
+		
 	}
 		
 }
