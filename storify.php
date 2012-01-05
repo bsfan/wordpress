@@ -544,7 +544,7 @@ class WP_Storify {
 		
 		//API call failed, can't continue
 		if ( !$story ) 
-			wp_die( 'An error occurred while publishing the story' );
+			wp_die( __( 'An error occurred while publishing the story', 'storify' ) );
 		
 		//the returned permalink is valid, the given may not be
 		$post->post_content = apply_filters( 'storify_callback_permalink', $story->permalink, $story, $post->ID ); 

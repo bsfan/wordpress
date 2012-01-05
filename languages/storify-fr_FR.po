@@ -4,13 +4,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Storify 1.0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/storify\n"
-"POT-Creation-Date: 2012-01-05 18:39:13+00:00\n"
+"POT-Creation-Date: 2012-01-05 18:59:29+00:00\n"
+"PO-Revision-Date: 2012-01-05 14:49-0500\n"
+"Last-Translator: Benjamin J. Balter <Ben@Balter.com>\n"
+"Language-Team: Storify <info@storify.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-01-05 13:47-0500\n"
-"Last-Translator: Benjamin J. Balter <Ben@Balter.com>\n"
-"Language-Team: Storify <info@storify.com>\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
@@ -42,6 +42,10 @@ msgstr "Merci d'entrer votre login Storify pour continuer"
 msgid "Storify Login:"
 msgstr "Storify Login:"
 
+#: storify.php:500
+msgid "Don't have a login? <a href=\"http://storify.com\" target=\"_blank\">Sign up for free</a>."
+msgstr "Pas de compte Storify? <a href=\"http://storify.com\" target=\"_blank\">Créez votre compte gratuit</a>."
+
 #. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
@@ -67,15 +71,16 @@ msgstr "Storify &mdash; Insérer une Story"
 msgid "You are not allowed to be here"
 msgstr "Vous n'êtes pas autorisé à être ici"
 
+#. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-msgid "http://www.storify.com"
-msgstr "http://www.storify.com"
+#. #-#-#-#-#  plugin.pot (Storify 1.0.1)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://storify.com"
+msgstr "http://storify.com"
 
 #. Description of the plugin/theme
 msgid "Brings the power of Storify, the popular social media storytelling platform to your WordPress site"
 msgstr "Rajoutez la puissance de Storify, le populaire outil pour créer des histoires avec le contenu des réseaux sociaux, à votre site Wordpress"
 
-#. Author URI of the plugin/theme
-msgid "http://storify.com"
-msgstr "http://storify.com"
-
+#~ msgid "http://www.storify.com"
+#~ msgstr "http://www.storify.com"
