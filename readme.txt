@@ -3,7 +3,7 @@ Contributors: Storify
 Tags: storify, social media, embed
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 
