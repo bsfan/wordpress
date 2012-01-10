@@ -66,6 +66,10 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed bug where cache would not properly invalidate when persistent caching was in use
+* Fixed bug which would break 404 errors when improper callback was passed as a URL parameter
+
 = 1.0.1 =
 * French translation support
 * Better internationalization handling

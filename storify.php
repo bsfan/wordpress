@@ -3,7 +3,7 @@
 Plugin Name: Storify
 Plugin URI: http://storify.com
 Description: Brings the power of Storify, the popular social media storytelling platform to your WordPress site
-Version: 1.0.1
+Version: 1.0.2
 Author: Storify
 Author URI: http://storify.com
 License: GPL2
@@ -594,10 +594,10 @@ class WP_Storify {
 
 		//API caches ( used by get_story_metadata() and get_noscript_html() )
 		$noscript_url = sprintf( $this->noscript_embed, $story->user, $story->slug );
-		delete_transient( 'storify_api_' . md5( $noscript ) );
+		delete_transient( 'storify_api_' . md5( $noscript_url ) );
 		
 		$metadata_url = sprintf( $this->story_json, $story->user, $story->slug );
-		delete_transient( 'storify_api_' . md5( $noscript_url ) );
+		delete_transient( 'storify_api_' . md5( $metadata_url ) );
 
  		if ( !$prime )
  			return;
@@ -661,7 +661,7 @@ class WP_Storify {
 				
 		//if our query arg isn't a query arg, return
 		if ( !array_key_exists( $this->permalink_query_arg, $args ) )
-			return $termplate;
+			return $template;
 		
 		//strip http:// from permalink
  		$permalink = str_replace( 'http://', '', $args[ $this->permalink_query_arg ] );
