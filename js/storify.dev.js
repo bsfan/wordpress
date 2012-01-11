@@ -57,6 +57,18 @@ function resizeStorifyIframe() {
 	if ( footer < 0 )
 		height = height - footer;
 	
-	jQuery( 'iframe#storify' ).height( height);
+	jQuery( 'iframe#storify' ).height( height );
+	
+	//if window is minimized horizontally, fold the admin menu
+	//if storify folds the menu and and the window is later widended, expand the menu 
+	//otherwise, respect user preference
+	if ( jQuery( window ).width() < 1240 ) {
+		jQuery( 'body' ).addClass( 'folded' );
+		storifyFolded = true;
+	} else if ( storifyFolded ) {
+		jQuery( 'body' ).removeClass( 'folded' );	
+	}
 	
 }
+
+var storifyFolded = false;
