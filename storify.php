@@ -40,7 +40,7 @@ class WP_Storify {
 	public $story_json = 'http://api.storify.com/v1/stories/%1$s/%2$s';
 	
 	//what elements to retrieve when getting story metadata
-	public $story_metadata = array( 'title', 'description', 'status', 'thumbnail', 'shortlink' );
+	public $story_metadata = array( 'title', 'description', 'status', 'thumbnail', 'shortlink'  );
 	
 	//URL to noscript Embed code (will parse begining with <body>)
 	public $noscript_embed = 'http://storify.com/%1$s/%2$s.html';
@@ -98,6 +98,7 @@ class WP_Storify {
  		add_action( 'admin_title', array( &$this, 'callback_handler' ) );
  		add_filter( 'template_include', array( &$this, 'callback_redirect' ) );
  		add_filter( 'storify_permalink', array( &$this, 'maybe_add_http' ), 0 );
+ 		add_filter( 'storify_tags', array( &$this, 'hashtag_filter' ), 5 );
 		
  		//iframe URL
  		add_filter( 'storify_iframe_url', array( &$this, 'iframe_url_edit_post_filter' ) );
@@ -226,6 +227,23 @@ class WP_Storify {
 		
 		return $output;
  	} 
+ 	
+ 	/**
+ 	 * Filters hashtags from list of story tags
+ 	 * @param object $story the story
+ 	 * @return object the modified story
+ 	 */
+ 	function hashtag_filter( $tags ) {
+ 	
+ 		if ( !is_array( $tags ) )
+ 			return $tags;
+ 	
+ 		foreach ( $tags as &$tag )
+ 			$tag = str_replace( '#', '', $tag );
+ 			
+ 		return $tags;
+ 	
+ 	}
 	
 	/**
 	 * Queries the Storify API for user data
@@ -301,12 +319,16 @@ class WP_Storify {
 
 		if ( !$data )
 			return false;
-			
+				
 		$output = array();
 
 		foreach ( $this->story_metadata as $meta )
 			$output[$meta] = ( isset( $data->content->$meta ) ) ? $data->content->$meta : null;
 		
+		//hashtags are a subobject of meta, query directly
+		$output['hashtags'] = ( isset( $data->content->meta->hashtags ) ) ? $data->content->meta->hashtags : null;
+		$output['hashtags'] = apply_filters( 'storify_tags', $output['hashtags'], $permalink );
+				
 		return $output;
 		
 	}
@@ -558,6 +580,10 @@ class WP_Storify {
  		
  		}
  		 		
+ 		//set tags if we've got 'em and this is a post
+ 		if ( $post->post_type == 'post' && !empty( $story->hashtags ) && apply_filters( 'storify_add_tags', true, $story, $post ) ) 
+ 			wp_set_post_tags( $post->ID, $story->hashtags );	
+		
  		//save changes
  		wp_update_post( $post );
  		$msg = 1;
