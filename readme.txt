@@ -66,6 +66,9 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 == Changelog ==
 
+= 1.0.3 =
+* Fix for warning level error on installs running WordPress 3.2 or earlier
+
 = 1.0.2 =
 * Add/edit Storify screen now features responsive design
 * Hashtags automatically added as post tags when publishing stories as posts

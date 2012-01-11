@@ -3,7 +3,7 @@
 Plugin Name: Storify
 Plugin URI: http://storify.com
 Description: Brings the power of Storify, the popular social media storytelling platform to your WordPress site
-Version: 1.0.2
+Version: 1.0.3
 Author: Storify
 Author URI: http://storify.com
 License: GPL2
@@ -922,7 +922,7 @@ class WP_Storify {
 	function add_tinymce_button( $buttons ) {
 		
 		if ( !$this->should_enqueue() )
-			return;
+			return $buttons;
 			
 		array_push( $buttons, "separator", "storify" );
 		return $buttons;
@@ -934,7 +934,7 @@ class WP_Storify {
 	function add_tinymce_plugin( $plugins ) {
 	
 		if ( !$this->should_enqueue() )
-			return;
+			return $plugins;
 			
 		$suffix = ( WP_DEBUG ) ? '.dev' : '';
 		$plugins['storify'] = plugins_url( 'js/storify.tinymce' . $suffix . '.js', __FILE__ );
