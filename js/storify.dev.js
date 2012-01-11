@@ -36,4 +36,27 @@ jQuery( document ).ready( function($) {
 		win.setTimeout( "jQuery('.mceTop span').html( storify.dialogTitle )", 1 );
 	}
 	
+	$(window).resize( function() { resizeStorifyIframe(); });
+	
+	resizeStorifyIframe();
+	
 });
+
+//responsively resizes the iframe and fixes the firefox 100% height bug
+function resizeStorifyIframe() {
+	
+	if ( !jQuery( 'iframe#storify' ) )
+		return;
+	
+	height = jQuery( 'body' ).height() - 120;
+	
+	//WP hides the footer on short screens so we can take up more space
+	footer = jQuery( window ).height() - jQuery( '#adminmenuwrap').height();
+	
+	//screen is shorter than content, so footer is hidden
+	if ( footer < 0 )
+		height = height - footer;
+	
+	jQuery( 'iframe#storify' ).height( height);
+	
+}

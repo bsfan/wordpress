@@ -67,6 +67,9 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 == Changelog ==
 
 = 1.0.2 =
+* Add/edit Storify screen now features responsive design
+* Javascript and CSS files only load on administrative pages when needed
+* Fixed bug where add/edit Storify screen would not fill entire height of window in Firefox
 * Fixed bug where cache would not immediately invalidate when a story is edited
 * Fixed bug which would break 404 errors when improper callback was passed as a URL parameter
 

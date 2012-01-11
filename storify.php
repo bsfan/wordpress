@@ -83,12 +83,12 @@ class WP_Storify {
  		add_action( 'admin_init', array( &$this, 'tinymce_register' ) );
  		
  		//enqueue css & js
- 		add_action( 'admin_init', array( &$this, 'enqueue_style' ) );
- 		add_action( 'admin_init', array( &$this, 'enqueue_script' ) );
+ 		add_action( 'admin_print_styles', array( &$this, 'enqueue_style' ) );
+ 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_script' ) );
  		add_action( 'wp_ajax_storify_dialog', array( &$this, 'dialog' ) );
  		
  		//i18n
- 		add_action( 'admin_init', array( &$this, 'localize_scripts' ) );
+ 		add_action( 'admin_enqueue_scripts', array( &$this, 'localize_scripts' ) );
  		
  		//sanitization
  		add_filter( 'storify_login', array( &$this, 'sanitize_login' ) );
@@ -834,8 +834,7 @@ class WP_Storify {
 			<?php do_action( 'pre_storify_iframe', $url ); ?>
 			<iframe id="storify" src="<?php echo $url; ?>"></iframe>
 			<?php do_action( 'post_storify_iframe', $url ); ?>
-		</div>
-	
+		</div>	
 	<?php } 
 	
 	/**
@@ -895,6 +894,10 @@ class WP_Storify {
 	 * Callback to filter tinyMCE button array and insert storify button
 	 */
 	function add_tinymce_button( $buttons ) {
+		
+		if ( !$this->should_enqueue() )
+			return;
+			
 		array_push( $buttons, "separator", "storify" );
 		return $buttons;
 	}
@@ -903,6 +906,10 @@ class WP_Storify {
 	 * Callback to register plugin with tinyMCE
 	 */
 	function add_tinymce_plugin( $plugins ) {
+	
+		if ( !$this->should_enqueue() )
+			return;
+			
 		$suffix = ( WP_DEBUG ) ? '.dev' : '';
 		$plugins['storify'] = plugins_url( 'js/storify.tinymce' . $suffix . '.js', __FILE__ );
    		return $plugins;
@@ -912,6 +919,10 @@ class WP_Storify {
 	 * Registers style sheet
 	 */
 	function enqueue_style() {
+	
+		if ( !$this->should_enqueue() )
+			return;
+	
 		wp_enqueue_style( 'storify', plugins_url( 'css/storify.css', __FILE__ ) );
 	}
 	
@@ -919,8 +930,34 @@ class WP_Storify {
 	 * Registers Javascript file(s)
 	 */
 	function enqueue_script() {
+		
+		if ( !$this->should_enqueue() )
+			return;
+			
 		$suffix = ( WP_DEBUG ) ? '.dev' : '';
 		wp_enqueue_script( 'storify', plugins_url( 'js/storify' . $suffix . '.js', __FILE__ ), array( 'jquery'), filemtime( dirname( __FILE__ ) . '/js/storify' . $suffix . '.js' ), true );
+		
+	}
+	
+	/**
+	 * Checks whether storify JS/CSS should be enqueued on the given page
+	 * Allows for conditional loading of resources and saves HTTP calls
+	 * @since 1.0.2
+	 */
+	function should_enqueue() {
+		$screen = get_current_screen();
+					
+		//screens to enqueue JS on		
+		$screens = apply_filters( 'storify_screens', array( 'toplevel_page_storify', 'post' ) );
+
+		if ( in_array( $screen->base, $screens ) )
+			return true;
+		
+		if ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST )
+			return true;
+			
+		return false;
+		
 	}
 	
 	/**
