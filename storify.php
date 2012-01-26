@@ -3,7 +3,7 @@
 Plugin Name: Storify
 Plugin URI: http://storify.com
 Description: Brings the power of Storify, the popular social media storytelling platform to your WordPress site
-Version: 1.0.3
+Version: 1.0.4
 Author: Storify
 Author URI: http://storify.com
 License: GPL2
