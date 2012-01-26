@@ -24,11 +24,11 @@ class WP_Storify {
 	public $permalink_query_arg = 'storyPermalink'; //query arg to look for on callback
 	
 	//regex to parse permalinks within posts
-	public $permalink_regex = '#http://(www\.)?storify.com/([A-Z0-9-]+)/([A-Z0-9-]+)(/)?#i'; 
+	public $permalink_regex = '#http://(www\.)?storify.com/([A-Z0-9-_]+)/([A-Z0-9-]+)(/)?#i'; 
 	
 	//regex to parse permalink from callback 
 	//(should be nearly identical to $permalink_regex, but with ^ and $ to prevent other strings
-	public $permalink_callback_regex = '#^http://(www\.)?storify.com/([A-Z0-9-]+)/([A-Z0-9-]+)(/)?$#i'; 
+	public $permalink_callback_regex = '#^http://(www\.)?storify.com/([A-Z0-9-_]+)/([A-Z0-9-]+)(/)?$#i'; 
 
 	//embed code, %1$s is username, %2$s is story slug
 	public $embed_code = '<script src="http://storify.com/%1$s/%2$s.js?header=false&sharing=false&border=false"></script>'; 
