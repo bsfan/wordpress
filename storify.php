@@ -98,7 +98,7 @@ class WP_Storify {
  		add_filter( 'storify_permalink', array( &$this, 'sanitize_permalink' ), 20 );
  		
  		//callback handler from storify.com
- 		add_action( 'admin_title', array( &$this, 'callback_handler' ) );
+ 		add_action( 'admin_title', array( &$this, 'callback_handler' ), 999 );
  		add_filter( 'template_include', array( &$this, 'callback_redirect' ) );
  		add_filter( 'storify_permalink', array( &$this, 'maybe_add_http' ), 0 );
  		add_filter( 'storify_tags', array( &$this, 'hashtag_filter' ), 5 );
@@ -645,36 +645,37 @@ class WP_Storify {
  	 * @return array $post the post array
  	 * @since 1.0.4
  	 */
- 	function maybe_add_description( $post ) {
+ 	function maybe_add_description( $post_arr ) {
+ 		global $post;
 
- 		if ( wp_is_post_revision( $post) )
- 			return $post;
+ 		if ( wp_is_post_revision( $post_arr) )
+ 			return $post_arr;
 
- 		if ( !$this->is_storify_post( $post ) )
- 			return $post;
+ 		if ( !$this->is_storify_post( $post_arr ) )
+ 			return $post_arr;
  		
 		//post array does not have ID, but global $post should	
- 		if ( get_post_meta( get_the_ID(), $this->description_meta, true ) )
- 			return $post; 		
+ 		if ( get_post_meta( $post->ID, $this->description_meta, true ) )
+ 			return $post_arr; 		
  		
- 		$story = $this->get_story( $post['post_content'], true );
+ 		$story = $this->get_story( $post_arr['post_content'], true );
 	
 		//gracefully die if there was an API error
 		if ( !isset( $story->description ) || !$story->description )
-			return $post;
+			return $post_arr;
 
 		$permalink = '<p>' . $story->description . '</p>' . "\r\n" . $story->permalink;
 
 		//put description immediately before permalink in case post has other content
- 		$post['post_content'] = str_replace( $story->permalink, $permalink, $post['post_content'] );	
+ 		$post_arr['post_content'] = str_replace( $story->permalink, $permalink, $post_arr['post_content'] );	
 		
-		if ( empty( $post['post_excerpt'] ) )
-			$post['post_excerpt'] = $story->description;
+		if ( empty( $post_arr['post_excerpt'] ) )
+			$post_arr['post_excerpt'] = $story->description;
 
 		//post array does not have ID, but global $post should
- 		update_post_meta( get_the_ID(), $this->description_meta, true );
+ 		update_post_meta( $post->ID, $this->description_meta, true );
  		
- 		return $post;
+ 		return $post_arr;
  		
  	}
  	
@@ -1007,6 +1008,11 @@ class WP_Storify {
 	 * @since 1.0.2
 	 */
 	function should_enqueue() {
+
+		//pre 3.1, just enqueue on all admin pages b/c get_current_screen hasn't been invented yet
+		if ( !function_exists( 'get_current_screen' ) )
+			return true;
+			
 		$screen = get_current_screen();
 					
 		//screens to enqueue JS on		
