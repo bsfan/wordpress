@@ -541,17 +541,17 @@ class WP_Storify {
 	 * note: being run on admin_title hook because must be afer $post is established
 	 * but before headers are sent so it can redirect
 	 */
-	function callback_handler() {
+	function callback_handler( $title ) {
 
 		global $post;
 		global $pagenow;
 			
 		if ( !$post || !$pagenow || !isset( $_GET[ $this->permalink_query_arg ] ) )
-			return;
+			return $title;
 			
 		//cap check
 		if ( !current_user_can( 'edit_posts' ) )
-			return;
+			return $title;
 		
 		$permalink = apply_filters( 'storify_permalink', $_GET[ $this->permalink_query_arg ] );
 		
@@ -559,7 +559,7 @@ class WP_Storify {
 		
 		//updating an existing post, no need to continue
 		if ( $pagenow != 'post-new.php' ) 
-			return;	
+			return $title;	
 			
 		//make API call to get story title and description
 		$story = $this->get_story( $permalink, true );

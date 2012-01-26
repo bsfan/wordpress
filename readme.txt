@@ -68,6 +68,7 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 = 1.0.4 =
 * Fix for story not embedding when Storify username contained an underscore charecter
+* Fix for plugin breaking tab titles in dashboard
 
 = 1.0.3 =
 * Fix for warning level error on installs running WordPress 3.2 or earlier
