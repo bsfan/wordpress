@@ -17,8 +17,11 @@ License: GPL2
  * @author Benjamin J. Balter ( ben.balter.com | ben@balter.com )
  */
 class WP_Storify {
-
+	
+	public $version = '1.0.4'; //plugin version
+	public $version_option = 'storify_version'; //option key to store current version
 	public $login_meta = '_storify_login'; //key used to store storify login within usermeta
+	public $description_meta = 'storify_description_added'; //postmeta to store if description has been added
 	public $create_url = 'http://storify.com/create'; //URL to create new story via iframe
 	public $callback_query_arg = 'callback'; //query argument to pass callback url via iframe
 	public $permalink_query_arg = 'storyPermalink'; //query arg to look for on callback
@@ -111,11 +114,13 @@ class WP_Storify {
  		add_filter( 'storify_embed', array( &$this, 'noscript_link_embed_filter'), 5, 2 );
  		add_filter( 'storify_embed', array( &$this, 'noscript_html_embed_filter'), 6, 2 );
  		
- 		//description
- 		add_filter( 'storify_callback_permalink', array( &$this, 'callback_description_filter' ), 5, 2 );
- 		
+ 		//description, title, tags
+		add_filter( 'wp_insert_post_data', array( &$this, 'maybe_add_description' ) );
+		 		
  		//purge cache on update
  		add_action( 'storify_edit', array( &$this, 'cache_purge' ), 10, 1 );
+ 		
+ 		add_action( 'admin_init', array( &$this, 'upgrade' ) );
  		  		 		
 	}
 
@@ -572,11 +577,10 @@ class WP_Storify {
 		$post->post_content = apply_filters( 'storify_callback_permalink', $story->permalink, $story, $post->ID ); 
 		
 		//api call failed, don't cause errors
-		if ( isset( $story->title ) && isset( $story->description ) ) {
+		if ( isset( $story->title ) ) {
  			
  			$post->post_title = $story->title;
  			$post->post_name = $story->title;
- 			$post->post_excerpt = $story->description;
  		
  		}
  		 		
@@ -634,16 +638,44 @@ class WP_Storify {
  	}
  	
  	/**
- 	 * Prepends Story description within post prior to inserting permalink
+ 	 * On post save, conditionally prepends permlaink with story description
  	 * Used because by default, embed code excludes description
  	 * Implemented as a filter to allow developers to short-circuit if necessary
- 	 * @param string $post_content the post's content
- 	 * @param object $story the story object
- 	 * @return string the modified post content
+ 	 * @param array $post the post array
+ 	 * @return array $post the post array
+ 	 * @since 1.0.4
  	 */
- 	function callback_description_filter( $post_content, $story ) {
- 		$post_content = '<p>' . $story->description . '</p>' . "\r\n" . $post_content;
- 		return $post_content;
+ 	function maybe_add_description( $post ) {
+
+ 		if ( wp_is_post_revision( $post) )
+ 			return $post;
+
+ 		if ( !$this->is_storify_post( $post ) )
+ 			return $post;
+ 		
+		//post array does not have ID, but global $post should	
+ 		if ( get_post_meta( get_the_ID(), $this->description_meta, true ) )
+ 			return $post; 		
+ 		
+ 		$story = $this->get_story( $post['post_content'], true );
+	
+		//gracefully die if there was an API error
+		if ( !isset( $story->description ) || !$story->description )
+			return $post;
+
+		$permalink = '<p>' . $story->description . '</p>' . "\r\n" . $story->permalink;
+
+		//put description immediately before permalink in case post has other content
+ 		$post['post_content'] = str_replace( $story->permalink, $permalink, $post['post_content'] );	
+		
+		if ( empty( $post['post_excerpt'] ) )
+			$post['post_excerpt'] = $story->description;
+
+		//post array does not have ID, but global $post should
+ 		update_post_meta( get_the_ID(), $this->description_meta, true );
+ 		
+ 		return $post;
+ 		
  	}
  	
  	/**
@@ -728,13 +760,17 @@ class WP_Storify {
  	/**
  	 * Looks for storify permalink within a post
  	 * @param int|obj $post the post
- 	 * @return bool true if storify post, otherwise false
+ 	 * @return string|bool permalink if storify post, otherwise false
  	 */
  	function is_storify_post( $post = null ) {
  		
  		//if no post is given, grab the global object
  		if ( $post == null )
  			global $post;
+ 			
+ 		//support post arrays for save/update callbacks
+ 		if ( is_array( $post ) )
+ 			$post = (object) $post;
  	
  		//if post is given as an int, grab the obj
  		if ( !is_object( $post ) )
@@ -743,7 +779,7 @@ class WP_Storify {
  		//post doesn't exist
  		if ( !$post )
  			return false;
- 			 		
+
 		if ( preg_match( $this->permalink_regex, $post->post_content ) )
 			return true;
 
@@ -1008,6 +1044,32 @@ class WP_Storify {
 	 */
 	function i18n() {
 		load_plugin_textdomain( 'storify', null, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+	
+	/**
+	 * Upgrade the database on plugin upgrades
+	 */
+	function upgrade() {
+		
+		if ( get_option( $this->version_option ) == $this->version )
+			return;
+	
+		//1.0.4 upgrade
+		//loop through all previosly published stories and add post meta
+		//prevents description from being added on subsequent updates
+		$posts = get_posts( array( 'numberposts' => -1 ) );
+		
+		foreach ( $posts as $post ) {
+		
+			if ( !$this->is_storify_post( $post ) )
+				continue;
+				
+			update_post_meta( $post->ID, $this->description_meta, true );
+		
+		}
+		
+		update_option( $this->version_option, $this->version );
+		
 	}
 		
 }

@@ -67,8 +67,9 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 == Changelog ==
 
 = 1.0.4 =
+* Story description now automatically prepended to post body when story URL is added to the post directly
 * Fix for story not embedding when Storify username contained an underscore charecter
-* Fix for plugin breaking tab titles in dashboard
+* Fix for plugin breaking page titles in administrative dashboard
 
 = 1.0.3 =
 * Fix for warning level error on installs running WordPress 3.2 or earlier
