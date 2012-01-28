@@ -120,6 +120,7 @@ class WP_Storify {
 		//purge cache on update
 		add_action( 'storify_edit', array( &$this, 'cache_purge' ), 10, 1 );
 
+		//upgrade DB
 		add_action( 'admin_init', array( &$this, 'upgrade' ) );
 
 	}
@@ -1115,6 +1116,7 @@ class WP_Storify {
 
 		}
 
+		//incremement DB version number
 		update_option( $this->version_option, $this->version );
 
 	}
