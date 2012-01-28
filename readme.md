@@ -3,7 +3,7 @@
 **Tags:** storify, social media, embed  
 **Requires at least:** 3.2  
 **Tested up to:** 3.4  
-**Stable tag:** 1.0.3  
+**Stable tag:** 1.0.4  
 
 Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 
@@ -82,7 +82,7 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 ### 1.0.4 ###
 * Story description now automatically prepended to post body when story URL is added to the post directly
-* Fix for story not embedding when Storify username contained an underscore charecter
+* Fix for story not embedding when Storify username contained an underscore character
 * Fix for plugin breaking page titles in administrative dashboard
 
 ### 1.0.3 ###
