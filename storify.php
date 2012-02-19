@@ -18,7 +18,7 @@ License: GPL2
  */
 class WP_Storify {
 
-	public $version             = '1.0.4'; //plugin version
+	public $version             = '1.0.5'; //plugin version
 	public $version_option      = 'storify_version'; //option key to store current version
 	public $login_meta          = '_storify_login'; //key used to store storify login within usermeta
 	public $description_meta    = 'storify_description_added'; //postmeta to store if description has been added
