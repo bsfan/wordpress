@@ -80,6 +80,9 @@ Yes and no. The Storify plugin is ready to be translated, but has not been trans
 
 ## Changelog ##
 
+### 1.0.5 ###
+* Fix for non-javascript alternative link not properly closing the `noscript` tag and breaking some themes
+
 ### 1.0.4 ###
 * Story description now automatically prepended to post body when story URL is added to the post directly
 * Fix for story not embedding when Storify username contained an underscore character
