@@ -1,6 +1,6 @@
 === Storify ===
 Contributors: Storify
-Tags: storify, social media, embed
+Tags: storify, social media, embed, twitter, Facebook, YouTube, Flickr,  instagram, soundcloud, stocktwits, breakingnews, Post, posts, images, links, disqus, tumblr, rss 
 Requires at least: 3.2
 Tested up to: 3.4
 Stable tag: 1.0.4
