@@ -3,7 +3,7 @@
 **Tags:** storify, social media, embed, twitter, Facebook, YouTube, Flickr,  instagram, soundcloud, stocktwits, breakingnews, Post, posts, images, links, disqus, tumblr, rss 
 **Requires at least:** 3.2  
 **Tested up to:** 3.4  
-**Stable tag:** 1.0.4  
+**Stable tag:** 1.0.5 
 
 Brings the power of Storify, the popular social media storytelling platform to your WordPress site
 
