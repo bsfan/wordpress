@@ -1099,23 +1099,28 @@ class WP_Storify {
 	 */
 	function upgrade() {
 
-		if ( get_option( $this->version_option ) == $this->version )
+		$db_version = get_option( $this->version_option );
+
+		if ( $db_version == $this->version )
 			return;
 
 		//1.0.4 upgrade
 		//loop through all previosly published stories and add post meta
 		//prevents description from being added on subsequent updates
-		$posts = get_posts( array( 'numberposts' => -1 ) );
-
-		foreach ( $posts as $post ) {
-
-			if ( !$this->is_storify_post( $post ) )
-				continue;
-
-			update_post_meta( $post->ID, $this->description_meta, true );
-
+		if ( $db_version < '1.0.4' ) {
+		
+			$posts = get_posts( array( 'numberposts' => -1 ) );
+		
+			foreach ( $posts as $post ) {
+		
+				if ( !$this->is_storify_post( $post ) )
+					continue;
+		
+				update_post_meta( $post->ID, $this->description_meta, true );
+		
+			}
 		}
-
+		
 		//incremement DB version number
 		update_option( $this->version_option, $this->version );
 
